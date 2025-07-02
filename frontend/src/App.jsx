@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './Login';
+import Signup from './Signup';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route
+          path="/login"
+          element={<Login onAuth={setUser} />}
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/"
+          element={
+            !user ? (
+              <Navigate to="/login" />
+            ) : (
+              <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow text-center">
+                <h2 className="text-2xl font-bold mb-4">Welcome, {user.username}!</h2>
+                <p className="mb-4">You are logged in.</p>
+                {/* Task management UI will go here */}
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  onClick={() => {
+                    localStorage.removeItem('token');
+                    setUser(null);
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            )
+          }
+        />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
