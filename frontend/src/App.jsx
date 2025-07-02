@@ -1,43 +1,96 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import Dashboard from './Dashboard';
 import Login from './Login';
 import Signup from './Signup';
-import './App.css';
+import axios from 'axios';
+
+const API = 'http://localhost:5001/api/auth';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Check for existing token on app load
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await axios.get(`${API}/me`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setUser(response.data.user);
+        } catch (error) {
+          // Token is invalid, remove it
+          localStorage.removeItem('token');
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleAuth = (userData) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="flex items-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+          <span className="ml-3 text-gray-600">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+        v7_fetcherPersist: true,
+        v7_normalizeFormMethod: true,
+        v7_partialHydration: true,
+        v7_skipActionErrorRevalidation: true
+      }}
+    >
       <Routes>
         <Route
           path="/login"
-          element={<Login onAuth={setUser} />}
+          element={
+            user ? <Navigate to="/" /> : <Login onAuth={handleAuth} />
+          }
         />
-        <Route path="/signup" element={<Signup />} />
+        <Route 
+          path="/signup" 
+          element={
+            user ? <Navigate to="/" /> : <Signup onAuth={handleAuth} />
+          } 
+        />
         <Route
           path="/"
           element={
-            !user ? (
-              <Navigate to="/login" />
+            user ? (
+              <Dashboard user={user} onLogout={handleLogout} />
             ) : (
-              <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow text-center">
-                <h2 className="text-2xl font-bold mb-4">Welcome, {user.username}!</h2>
-                <p className="mb-4">You are logged in.</p>
-                {/* Task management UI will go here */}
-                <button
-                  className="bg-red-500 text-white px-4 py-2 rounded"
-                  onClick={() => {
-                    localStorage.removeItem('token');
-                    setUser(null);
-                  }}
-                >
-                  Logout
-                </button>
-              </div>
+              <Navigate to="/login" />
             )
           }
         />
+        {/* Catch all route */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
