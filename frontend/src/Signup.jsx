@@ -22,7 +22,7 @@ export default function Signup({ onAuth }) {
     setLoading(true);
     
     try {
-      const res = await axios.post(`${API}/signup`, form);
+      const res = await axios.post(`${API}/auth/signup`, form);
       // Auto-login after successful signup
       localStorage.setItem('token', res.data.token);
       onAuth(res.data.user);
