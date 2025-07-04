@@ -8,7 +8,7 @@ import Login from './Login';
 import Signup from './Signup';
 import axios from 'axios';
 
-const API = 'http://localhost:5001/api/auth';
+const API = 'https://todoapp-backend-rf59.onrender.com/api';
 
 function App() {
   const [user, setUser] = useState(null);

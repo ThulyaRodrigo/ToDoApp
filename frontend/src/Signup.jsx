@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API = 'http://localhost:5001/api/auth';
+const API = 'https://todoapp-backend-rf59.onrender.com/api';
 
 export default function Signup({ onAuth }) {
   const [form, setForm] = useState({ email: '', username: '', password: '' });

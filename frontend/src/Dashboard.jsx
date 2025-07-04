@@ -8,7 +8,7 @@ import TaskList from './components/TaskList';
 import TaskStats from './components/TaskStats';
 import axios from 'axios';
 
-const API = 'http://localhost:5001/api';
+const API = 'https://todoapp-backend-rf59.onrender.com/api';
 
 export default function Dashboard({ user, onLogout }) {
   const [tasks, setTasks] = useState([]);

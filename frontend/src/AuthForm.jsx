@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API = 'http://localhost:5000/api/auth';
+const API = 'https://todoapp-backend-rf59.onrender.com/api';
 
 export default function AuthForm({ onAuth }) {
   const [isLogin, setIsLogin] = useState(true);
