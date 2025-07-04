@@ -22,14 +22,14 @@ export default function AuthForm({ onAuth }) {
     setError('');
     try {
       if (isLogin) {
-        const res = await axios.post(`${API}/login`, {
+        const res = await axios.post(`${API}/auth/login`, {
           emailOrUsername: form.emailOrUsername,
           password: form.password,
         });
         localStorage.setItem('token', res.data.token);
         onAuth(res.data.user);
       } else {
-        await axios.post(`${API}/signup`, {
+        await axios.post(`${API}/auth/signup`, {
           email: form.email,
           username: form.username,
           password: form.password,
