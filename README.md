@@ -9,7 +9,6 @@ A comprehensive todo application built with React (frontend) and Node.js/Express
 - [x] User login with email or username
 - [x] JWT-based authentication
 - [x] Auto-login after signup
-- [x] Protected routes
 - [x] Session persistence
 
 ### 📝 Task Management
@@ -139,27 +138,6 @@ A comprehensive todo application built with React (frontend) and Node.js/Express
 - `PATCH /api/tasks/:id/reset` - Mark task as incomplete
 - `GET /api/tasks/stats/overview` - Get task statistics
 
-## Usage Guide
-
-### Creating an Account
-1. Navigate to the signup page
-2. Enter your email, username, and password (min 6 characters)
-3. You'll be automatically logged in after successful signup
-
-### Managing Tasks
-1. **Add Task**: Click "Add Task" button and fill in the details
-2. **Edit Task**: Click the edit icon on any task
-3. **Complete Task**: Click the checkbox next to a task
-4. **Delete Task**: Click the delete icon and confirm
-
-### Filtering and Search
-- Use the search bar to find tasks by title or description
-- Use the filter dropdowns to filter by status, priority, or due date
-- Click the sort order button to toggle between ascending/descending
-
-### Dashboard
-- View statistics at the top showing total, active, completed, and overdue tasks
-- Visual indicators help you quickly identify task priorities and statuses
 
 ## Project Structure
 
@@ -215,18 +193,11 @@ ToDoApp/
 - Confirmation dialogs prevent accidental actions
 - Clean, modern interface
 
-## Contributing
-
-This is a learning project. Feel free to:
-- Add new features
-- Improve the UI/UX
-- Optimize performance
-- Add tests
-- Enhance security
 
 ## Future Enhancements
 
-Potential features to add:
+This is a learning project.
+Potential features to add in future:
 - [ ] Task categories/tags
 - [ ] Task sharing between users
 - [ ] Email notifications
@@ -235,7 +206,3 @@ Potential features to add:
 - [ ] Mobile app
 - [ ] Calendar integration
 - [ ] Task templates
-
----
-
-**Happy Task Managing! 🎯**
