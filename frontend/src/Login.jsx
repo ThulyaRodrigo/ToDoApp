@@ -22,7 +22,7 @@ export default function Login({ onAuth }) {
     setLoading(true);
     
     try {
-      const res = await axios.post(`${API}/login`, form);
+      const res = await axios.post(`${API}/auth/login`, form);
       localStorage.setItem('token', res.data.token);
       onAuth(res.data.user);
       navigate('/');
